@@ -3,6 +3,7 @@
 
 using System.Xml;
 using System.Linq;
+using System.Collections.Generic;
 
 List<Product> products = new List<Product>()
 {
@@ -62,56 +63,85 @@ Console.WriteLine("Welcome to Brass and Poems!");
 string choice = null;
 while (choice != "5")
 {
+    DisplayMenu();
+    choice = Console.ReadLine();
+    //implement your loop here
+    if (choice == "1")
+    {
+        DisplayAllProducts(products, productTypes);
+    }
+    else if (choice == "2")
+    {
+        DeleteProduct(products, productTypes);
+    }
+    else if (choice == "3")
+    {
+       AddProduct(products, productTypes);
+    }
+    else if (choice == "4")
+    {
+       UpdateProduct(products, productTypes);
+    }
+    else if (choice == "5")
+    {
+        Console.WriteLine("See ya!");
+    }
+}
+
+void DisplayMenu()
+{
     Console.WriteLine(@"Main Menu:
 1. Display all products
 2. Delete a product
 3. Add a new product
 4. Update product properties
 5. Exit");
-    choice = Console.ReadLine();
-    //implement your loop here
-    if (choice == "1")
-    {
-        for (int i = 0; i < products.Count; i++)
-        {
-            Product product = products[i];
-            ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-            Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
-        }
-    }
-    else if (choice == "2")
-    {
-        for (int i = 0; i < products.Count; i++)
-        {
-            Product product = products[i];
-            ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-            Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
-        }
-            int response = int.Parse(Console.ReadLine().Trim());
-            if(response >= 1 && response <= products.Count)
-            {
-                products.RemoveAt(response - 1);
-                Console.WriteLine("Product removed successfully");
-            }
-    }
-    else if (choice == "3")
-    {
-        Console.WriteLine("Enter the product name: ");
-        string Name = Console.ReadLine();
-        Console.WriteLine("Enter the product price: ");
-        decimal Price = decimal.Parse(Console.ReadLine());
-        Console.WriteLine("Choose a product type: 1. Brass, 2. Poem");
-        int Id = int.Parse(Console.ReadLine());
+}
 
-        Product newProduct = new Product
-        {
-            Name = Name,
-            Price = Price,
-            ProductTypeId = Id,
-        };
-        products.Add(newProduct);
+void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
+{
+    for (int i = 0; i < products.Count; i++)
+    {
+        Product product = products[i];
+        ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
+        Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
     }
-    else if (choice == "4")
+}
+
+void DeleteProduct(List<Product> products, List<ProductType> productTypes)
+{
+    for (int i = 0; i < products.Count; i++)
+    {
+        Product product = products[i];
+        ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
+        Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
+    }
+    int response = int.Parse(Console.ReadLine().Trim());
+    if (response >= 1 && response <= products.Count)
+    {
+        products.RemoveAt(response - 1);
+        Console.WriteLine("Product removed successfully");
+    }
+}
+
+void AddProduct(List<Product> products, List<ProductType> productTypes)
+{
+    Console.WriteLine("Enter the product name: ");
+    string Name = Console.ReadLine();
+    Console.WriteLine("Enter the product price: ");
+    decimal Price = decimal.Parse(Console.ReadLine());
+    Console.WriteLine("Choose a product type: 1. Brass, 2. Poem");
+    int Id = int.Parse(Console.ReadLine());
+
+    Product newProduct = new Product
+    {
+        Name = Name,
+        Price = Price,
+        ProductTypeId = Id,
+    };
+    products.Add(newProduct);
+}
+    void UpdateProduct(List<Product> products, List<ProductType> productTypes)
     {
         for (int i = 0; i < products.Count; i++)
         {
@@ -119,7 +149,7 @@ while (choice != "5")
             ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
             Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
         }
-            Console.WriteLine("Which product would you like to update?");
+        Console.WriteLine("Which product would you like to update?");
 
         int userChoice = int.Parse(Console.ReadLine().Trim());
         int productToUpdate = userChoice - 1;
@@ -145,7 +175,7 @@ while (choice != "5")
         if (!string.IsNullOrEmpty(response2))
         {
             selectedProduct.Price = decimal.Parse(response2);
-       
+
         }
         else
         {
@@ -156,7 +186,7 @@ while (choice != "5")
         {
             int productTypeId = int.Parse(response3);
             selectedProduct.ProductTypeId = productTypeId;
-     
+
         }
         else
         {
@@ -174,93 +204,6 @@ while (choice != "5")
 
         Console.WriteLine("Product updated successfully!");
     }
-    else if (choice == "5")
-    {
-        Console.WriteLine("See ya!");
-    }
-}
-
-void DisplayMenu()
-{
-    throw new NotImplementedException();
-}
-
-void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
-{
-    throw new NotImplementedException();
-}
-
-void DeleteProduct(List<Product> products, List<ProductType> productTypes)
-{
-    throw new NotImplementedException();
-}
-
-void AddProduct(List<Product> products, List<ProductType> productTypes)
-{
-     for (int i = 0; i < products.Count; i++)
-        {
-            Product product = products[i];
-            ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-            Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
-        }
-            Console.WriteLine("Which product would you like to update?");
-
-        int userChoice = int.Parse(Console.ReadLine().Trim());
-        int productToUpdate = userChoice - 1;
-
-        Product selectedProduct = products[productToUpdate];
-        Console.WriteLine($"You have chosen {selectedProduct.Name}. It costs {selectedProduct.Price} dollars and is of product type {selectedProduct.ProductTypeId}");
-        Console.WriteLine("What should the new product name be? ");
-        string response1 = Console.ReadLine();
-        Console.WriteLine("What should the updated price be? ");
-        string response2 = Console.ReadLine();
-        Console.WriteLine("What is the updated product type? ");
-        string response3 = Console.ReadLine();
-
-        if (string.IsNullOrEmpty(response1))
-        {
-            selectedProduct.Name = selectedProduct.Name;
-        }
-        else
-        {
-            selectedProduct.Name = response1;
-        }
-
-        if (!string.IsNullOrEmpty(response2))
-        {
-            selectedProduct.Price = selectedProduct.Price;
-        }
-        else
-        {
-            selectedProduct.Price = decimal.Parse(response2);
-        }
-
-        if (!string.IsNullOrEmpty(response3))
-        {
-            selectedProduct.ProductTypeId = selectedProduct.ProductTypeId;
-        }
-        else
-        {
-            int productTypeId = int.Parse(response3);
-            selectedProduct.ProductTypeId = productTypeId;
-        }
-
-        Product updatedProduct = new Product
-        {
-            Name = response1,
-            Price = decimal.Parse(response2),
-            ProductTypeId = int.Parse(response3),
-        };
-
-        selectedProduct = updatedProduct;
-
-        Console.WriteLine("Product updated successfully!");
-}
-
-void UpdateProduct(List<Product> products, List<ProductType> productTypes)
-{
-    throw new NotImplementedException();
-}
 
 // don't move or change this!
 public partial class Program { }
