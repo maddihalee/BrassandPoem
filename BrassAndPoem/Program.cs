@@ -174,8 +174,8 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 
         if (!string.IsNullOrEmpty(response3))
         {
-            int productTypeId = int.Parse(response3);
-            selectedProduct.ProductTypeId = productTypeId;
+            int productId = int.Parse(response3);
+            selectedProduct.ProductTypeId = productId;
 
         }
         else
@@ -185,9 +185,9 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 
         Product updatedProduct = new Product
         {
-            Name = response1,
-            Price = decimal.Parse(response2),
-            ProductTypeId = int.Parse(response3),
+            Name = selectedProduct.Name,
+            Price = selectedProduct.Price,
+            ProductTypeId = selectedProduct.ProductTypeId,
         };
 
         selectedProduct = updatedProduct;
