@@ -110,12 +110,7 @@ void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
 
 void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 {
-    for (int i = 0; i < products.Count; i++)
-    {
-        Product product = products[i];
-        ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-        Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
-    }
+    DisplayAllProducts(products, productTypes);
     int response = int.Parse(Console.ReadLine().Trim());
     if (response >= 1 && response <= products.Count)
     {
@@ -143,12 +138,7 @@ void AddProduct(List<Product> products, List<ProductType> productTypes)
 }
     void UpdateProduct(List<Product> products, List<ProductType> productTypes)
     {
-        for (int i = 0; i < products.Count; i++)
-        {
-            Product product = products[i];
-            ProductType productType = productTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-            Console.WriteLine($"{i + 1}. {product.Name}, Product type {productType.Id}");
-        }
+        DisplayAllProducts(products, productTypes);
         Console.WriteLine("Which product would you like to update?");
 
         int userChoice = int.Parse(Console.ReadLine().Trim());
